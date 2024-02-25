@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    {%if user.is_authenticated%} 
+        <h1 allign="center" >Hello {{user.username}} Welcome to Auction House</h1>
+        <h3 allign="center"><a href="{%url 'userProfile:register'%}">Register as a buyer/seller</a></h3>
+        <a href="{% url 'userProfile:logout'%}">Log Out</a><br><br>
+    {%else%} 
+        <h1 allign="center" >Welcome to Auction House</h1>
+        <h3 allign="center"><a href="{%url 'account_signup'%}">Please sign up</a></h3>
+        <h3 allign="center"><a href="{%url 'account_login'%}">Please sign in</a></h3>
+    {%endif%}
+</html>
