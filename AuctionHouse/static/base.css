@@ -5,16 +5,20 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100vh;
+
+  
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
+ 
 }
 
 /* Navigation Bar Styles */
 .navbar {
-  background-color: #29294d; /* Change to your desired color */
+  background-color: #001f3f;
+
 }
 
 .navbar-brand,
@@ -82,4 +86,33 @@ nav .navbar-brand {
 }
 
 
+ul {
+  padding: 0;
+  margin: 0;
+}
 
+ul li {
+  margin-bottom: 5px;
+  color: white;
+}
+
+
+/* Style the submit button */
+input[type="submit"] {
+  font-size: 20px;
+  background-color: white; 
+  color: #001f3f;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  width: 130px;
+  border-color: #0f0f2d;
+  border-radius: 30px;
+  margin-right: 8px;
+}
+
+
+/* Style the submit button on hover */
+input[type="submit"]:hover {
+  background-color: rgb(80, 80, 221);
+}

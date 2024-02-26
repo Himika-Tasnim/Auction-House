@@ -1,18 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
 
-    <h2>Update Profile</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save Changes</button>
-    </form>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="container d-flex justify-content-center align-items-center">
+    <div class="card p-4 border-primary rounded shadow" style="background-color: #001f3f; max-width: 400px;">
+        <h1 style="color: white; font-size: 30px;">Update Profile</h1><br>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="submit">
+        </form>
+
+    </div>
+</div>
+{% endblock %}
