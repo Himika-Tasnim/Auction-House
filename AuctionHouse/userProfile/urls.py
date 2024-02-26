@@ -6,5 +6,6 @@ app_name = 'userProfile'
 urlpatterns=[
     path('',views.home,name="home"),
     path('register/',views.register,name="register"),
-    path("logout/",views.logout_view,name="logout"),
+    path("aboutUs/",views.aboutUs,name="aboutUs"),
+    path("profile_view/",views.profile_view,name="profile_view"),
     ]
