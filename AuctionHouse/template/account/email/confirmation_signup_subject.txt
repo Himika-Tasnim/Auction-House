@@ -1,5 +1,0 @@
-Hello {{user.username}}, 
-Welcome to Auction House.
-
-Once you've confirmed your email address, you'll be the newest member of "Auction House" where you can buy or sell your property & get financial advice from our experts. 
-Please click on the link below to confirm your email address and start a new journey to shape your future with us : {{ activate_url }} 

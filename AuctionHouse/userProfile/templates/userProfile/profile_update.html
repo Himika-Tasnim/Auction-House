@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {%load static%}
+    <link rel="stylesheet"  href="{% static 'app1/table.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Your Profile</h1>
+        <p>username={{user.username}}</p>
+        {% for service in services%}
+            <tr>
+                <td>{{service.user}}</td>
+                <td>{{service.user.location}}</td>
+                <td>{{service.type}}</td>
+                <td>{{service.availability}}</td>
+                {%if user.is_authenticated%}
+                {%if user.patient%} 
+                <td><a href="{%url 'app1:booking' id=service.id %}" class="btn" role="button" data-bs-toggle="button">Book</a></td>
+                {%endif%}
+                {%endif%}
+            </tr>
+        {%endfor%}  
+    </table>
+
+</body>
+</html>

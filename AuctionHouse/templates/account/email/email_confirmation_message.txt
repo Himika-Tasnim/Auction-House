@@ -1,0 +1,6 @@
+Subject: Confirm your email address in Alauddin Academy
+
+Welcome to Alauddin Academy.
+
+You're receiving this email because the user {{ user.username }} ({{ user.email }}) has given your email address to register an account on Alauddin Academy.
+Please click on the link below to confirm your email address: {{ activate_url }} 

@@ -1,0 +1,162 @@
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('background.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+
+.buttons {
+  position: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 50px 50px;*{
+      margin: 0;
+      padding: 0;
+    }
+    .navbar-toggler{
+      outline: none;
+      padding: 0;
+      border-color:#4e4caf;
+    
+    
+    }
+    .navbar-style{
+      box-shadow: 0 5px 10px #8d3b3b;
+    
+    }
+    
+    body{
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: url("background.jpeg");
+      opacity: 1.00;
+      border-radius: 10px;
+  
+    }
+    
+    
+    
+    
+    .btn.btn-primary {
+      width:120px ;
+      background-color: #4e4caf;
+      border-color: #4e4caf;
+      border-radius: 30px;
+      margin-right:8px;
+    }
+    
+    .btn.btn-outline-primary {
+      width:120px ;
+      background-color: #4e4caf;
+      color: #ffffff;
+      border-color: #4e4caf;
+      border-radius: 30px;
+      margin-left:4px;
+    }
+    
+    .btn.btn-primary:hover{
+      background-color: #4e4caf;
+      
+    
+    }
+    
+    .btn.btn-outline-primary:hover {
+      background-color: #4e4caf;
+      
+    
+    }
+    
+    /* homepage_style.css */
+    
+    /* Navigation Bar Styles */
+    .navbar {
+      background-color: #4e4caf; /* Change to your desired color */
+    }
+    
+    .navbar-brand,
+    .navbar-nav .nav-link {
+      color: #000000; /* Change to your desired text color */
+    }
+    
+    .navbar-toggler-icon {
+      background-color: #4e4caf; /* Change to your desired color */
+    }
+    
+    /* Optionally, add some hover styles for better user interaction */
+    .navbar-nav .nav-link:hover {
+      color: #ffffff; /* Change to a different color on hover */
+    }
+    
+    
+    /* Increase specificity for the navbar-brand */
+    nav .navbar-brand {
+      color: white;
+    }
+    
+    /* Increase specificity for the h1 */
+    .container h1 {
+      font-weight: 200;
+      font-display: flex;
+      font-size: 50px;
+      margin-bottom: 50px;
+      color: #ffffff;
+    }
+    
+    .container p {
+      color:#ffffff;
+      font: 1em arial;
+      margin-bottom: 50px;
+    
+      
+    }
+  font-size: 18px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: Arial, sans-serif;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+}
+
+.btn {
+  padding: 15px 20px;
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.btn-book {
+  background-color: #4CAF50;
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.6);
+}
+
+.btn-book:hover {
+  background-color: #3f8e44;
+  box-shadow: 0 7px 20px rgba(76, 175, 80, 0.8);
+}
+
+.btn-login {
+  background-color: #2196F3;
+  box-shadow: 0 5px 15px rgba(33, 150, 243, 0.6);
+}
+
+.btn-login:hover {
+  background-color: #1a73e8;
+  box-shadow: 0 7px 20px rgba(33, 150, 243, 0.8);
+}
