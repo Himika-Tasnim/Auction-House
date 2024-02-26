@@ -1,15 +1,13 @@
-<!-- auction_items.html -->
+<!-- upcoming_auction_items.html -->
 {% extends 'base.html' %}
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="mb-4">Auction Items</h2>
-
     <!-- Search form -->
-    <div class="search-container">
-        <form action="{% url 'search_upcoming_auctions' %}" method="GET">
-            <input type="text" placeholder="Search for auctions..." name="query" required>
-            <button type="submit">Search</button>
+    <div class="search-container text-center mb-4">
+        <form action="{% url 'search_upcoming_auctions' %}" method="GET" class="form-inline">
+            <input type="text" class="form-control" placeholder="Search for auctions..." name="query" required>
+            <button type="submit" class="btn btn-primary">Search</button>
         </form>
     </div>
 
@@ -21,24 +19,32 @@
                 <h2>Upcoming Auctions</h2>
             </div>
             <div class="card-body">
-                {% if upcoming_auctions %}
-                <ul class="list-group list-group-flush" id="upcoming-auctions">
+                <div class="row">
                     {% for auction in upcoming_auctions %}
-                    <li class="list-group-item">
-                        <a href="{% url 'auction_detail' auction.id %}">
-                            <strong>{{ auction.title }}</strong> - {{ auction.description }}<br>
-                            Start Time: <span class="start-time">{{ auction.start_time }}</span>, End Time: {{ auction.end_time }}
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
                             {% if auction.image %}
-                            <br>
-                            <img src="{{ auction.image.url }}" alt="{{ auction.title }} Image" width="200">
+                            <img src="{{ auction.image.url }}" alt="{{ auction.title }} Image" class="card-img-top">
                             {% endif %}
-                        </a>
-                    </li>
+                            <div class="card-body">
+                                <h3 class="card-title">{{ auction.title }}</h3>
+                                <h10 class="card-text text-dark">Seller: {{ auction.created_by.username }}</h10><br>
+                                <p class="card-text text-dark mb-0">{{ auction.description|truncatewords:15 }}</p>
+                                <p class="card-text font-weight-bold text-primary mb-0">
+                                    Current Bid: {{ auction.current_bid }}
+                                </p>
+                                <p class="card-text mb-3">
+                                    <small class="text-muted">
+                                        Start Time: <span class="start-time">{{ auction.start_time }}</span><br>
+                                        End Time: {{ auction.end_time }}
+                                    </small>
+                                </p>
+                                <a href="{% url 'auction_detail' auction.id %}" class="btn btn-sm btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
-                </ul>
-                {% else %}
-                <p>No upcoming auctions at the moment.</p>
-                {% endif %}
+                </div>
             </div>
         </div>
     </div>
