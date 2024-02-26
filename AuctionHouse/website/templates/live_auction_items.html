@@ -1,0 +1,43 @@
+<!-- auction_items.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Auction Items</h2>
+
+    <!-- Search form -->
+    <div class="search-container">
+        <form action="{% url 'search_live_auctions' %}" method="GET">
+            <input type="text" placeholder="Search for auctions..." name="query" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- Display Auction Items -->
+    <div class="card-deck">
+        <!-- Live Auctions -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Live Auctions</h2>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush" id="live-auctions">
+                    {% for auction in live_auctions %}
+                    <li class="list-group-item">
+                        <a href="{% url 'auction_detail' auction.id %}">
+                            <strong>{{ auction.title }}</strong> - {{ auction.description }}<br>
+                            Start Time: <span class="start-time">{{ auction.start_time }}</span>, End Time: {{ auction.end_time }}<br>
+                            Current Bid: {{ auction.current_bid }}
+                            {% if auction.image %}
+                            <br>
+                            <img src="{{ auction.image.url }}" alt="{{ auction.title }} Image" width="200">
+                            {% endif %}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
