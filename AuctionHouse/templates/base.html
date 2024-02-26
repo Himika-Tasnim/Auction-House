@@ -48,6 +48,8 @@
           <li class="nav-item">
             <a class="nav-link" href="">Financial advice</a>
           </li>
+          {%if user.is_authenticated%}
+          {%if user.buyer_seller%}
           <li class="nav-item">
             <a class="nav-link" href="">Sell House</a>
           </li>
@@ -57,6 +59,8 @@
           <li class="nav-item">
             <a class="nav-link" href="">View Cart</a>
           </li>
+          {%endif%}
+          {%endif%}
             </ul>
           </li>
         </ul>

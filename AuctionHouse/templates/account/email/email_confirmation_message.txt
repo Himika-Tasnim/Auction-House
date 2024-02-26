@@ -1,6 +1,7 @@
-Subject: Confirm your email address in Alauddin Academy
+Subject: Confirm your email address in Auction House
 
-Welcome to Alauddin Academy.
+Hello {{ user.username }} ,
+Welcome to Auction House.
 
-You're receiving this email because the user {{ user.username }} ({{ user.email }}) has given your email address to register an account on Alauddin Academy.
-Please click on the link below to confirm your email address: {{ activate_url }} 
+Please click on the link below to confirm your email address ({{ user.email }}) and start a new journey with us 
+{{ activate_url }} 
