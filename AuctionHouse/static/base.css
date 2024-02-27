@@ -5,9 +5,9 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100vh;
-
   
 }
+
 
 .container {
   max-width: 1200px;
@@ -23,19 +23,18 @@ body {
 
 .navbar-brand,
 .navbar-nav .nav-link {
-  color: #ffffff; /* Change to your desired text color */
+  color: #ffffff;
 }
 
 .navbar-toggler-icon {
-  background-color: #4e4caf; /* Change to your desired color */
+  background-color: #4e4caf; 
 }
 
-/* Optionally, add some hover styles for better user interaction */
+
 .navbar-nav .nav-link:hover {
-  color: #ffffff; /* Change to a different color on hover */
+  color: #ffffff; /
 }
 
-/* Increase specificity for the navbar-brand */
 nav .navbar-brand {
   color: white;
 }
@@ -59,7 +58,7 @@ nav .navbar-brand {
 
 .container p {
   color: #ffffff;
-  font: 1em Arial, sans-serif; /* Adjust font */
+  font: 1em Arial, sans-serif; 
   margin-bottom: 50px;
 }
 
