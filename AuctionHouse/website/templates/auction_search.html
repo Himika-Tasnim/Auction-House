@@ -1,0 +1,28 @@
+<!-- auction_search.html -->
+
+<div class="container mt-4">
+    <h2 class="mb-4">Search Results for "{{ query }}" in {{ search_type }}</h2>
+    {% if auctions %}
+        <ul class="list-group">
+            {% for auction in auctions %}
+                <li class="list-group-item">
+                    <a href="{% url 'auction_detail' item_id=auction.id %}">
+                        <strong>Title:</strong> {{ auction.title }}
+                        <br>
+                        <strong>Description:</strong> {{ auction.description }}
+                        <br>
+                        <strong>Start Time:</strong> {{ auction.start_time }}
+                        <br>
+                        <strong>End Time:</strong> {{ auction.end_time }}
+                        <br>
+                        <strong>Current Bid:</strong> {{ auction.current_bid }}
+                        <br>
+                        <strong>Address:</strong> {{ auction.address }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No matching auctions found.</p>
+    {% endif %}
+</div>

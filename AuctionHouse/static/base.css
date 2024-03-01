@@ -115,3 +115,7 @@ input[type="submit"] {
 input[type="submit"]:hover {
   background-color: rgb(80, 80, 221);
 }
+form button{
+  margin-left: calc(50% - 100px);
+  width: 200px;
+}
