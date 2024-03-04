@@ -123,8 +123,3 @@ form button {
   margin-left: calc(50% - 100px);
   width: 200px;
 }
-
-form label {
-  color: black !important;
-  font-weight: bold;
-}
