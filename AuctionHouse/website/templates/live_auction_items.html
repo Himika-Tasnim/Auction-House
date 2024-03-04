@@ -28,9 +28,8 @@
                             {% endif %}
                             <div class="card-body">
                                 <h3 class="card-title">{{ auction.title }}</h3>
-                                <h10 class="card-text text-dark">Seller: {{ auction.created_by.username }}</h10><br>
+                                <p class="card-text text-dark">Seller: <a href="{% url 'website:seller_profile' seller_id=auction.created_by.buyer_seller.user_id %}">{{ auction.created_by.username }}</a></p>
                                 <p class="card-text text-dark mb-0">{{ auction.description|truncatewords:15 }}</p>
-                                
                                 <p class="card-text mb-3">
                                     <small class="text-muted">
                                         Start Time: <span class="start-time">{{ auction.start_time }}</span><br>

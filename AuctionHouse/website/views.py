@@ -5,6 +5,7 @@ from .models import AuctionItem
 from .forms import * 
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+from userProfile.models import Buyer_Seller
 
 
 def live_auction_items(request):
@@ -98,14 +99,33 @@ def bidding(request, item_id):
         form=BiddingForm(request.POST)
         if form.is_valid():
             bid_amount = form.cleaned_data['current_bid']
-            if bid_amount>auction.current_bid:
-                auction.current_bid=bid_amount
+            if bid_amount > auction.current_bid and bid_amount > auction.start_price:
+                auction.current_bid = bid_amount
                 auction.save()
-            return redirect('website:live_auction_items')
+                return redirect('website:live_auction_items')
+            else:
+                message = 'Your bid should be greater than the current bid and starting price.'
+                return render(request, 'bidding.html', {'auction': auction, 'form': form, 'message': message})
     else:
         form=BiddingForm
     return render(request,'bidding.html',{'auction': auction,'form':form})
         
 
+def seller_rating(request, item_id):
+    auction = get_object_or_404(AuctionItem, id=item_id)
+    seller = auction.created_by.buyer_seller
 
-    
+    if request.method == "POST":
+        rating = int(request.POST.get('rating'))
+
+        seller.ratings_sum += rating
+        seller.ratings_count += 1
+        seller.save()
+
+        return redirect('website:live_auction_items')
+
+    return render(request, 'seller_rating.html', {'seller': seller, 'auction': auction})
+
+def seller_profile(request, seller_id):
+    seller = get_object_or_404(Buyer_Seller, user_id=seller_id)
+    return render(request, 'seller_profile.html', {'seller': seller})
