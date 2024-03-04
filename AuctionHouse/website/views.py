@@ -10,11 +10,12 @@ from django.contrib.auth.decorators import login_required
 def live_auction_items(request):
     current_time = timezone.now()
     # Live Auctions
-    live_auctions = AuctionItem.objects.filter(start_time__lte=current_time, end_time__gte=current_time)
+    live_auctions = AuctionItem.objects.filter(start_time__lte=current_time, end_time__gt=current_time)
 
     return render(request, 'live_auction_items.html', {
         'live_auctions': live_auctions,
     })
+
 
 def upcoming_auction_items(request):
     current_time = timezone.now()
@@ -23,6 +24,15 @@ def upcoming_auction_items(request):
 
     return render(request, 'upcoming_auction_items.html', {
         'upcoming_auctions': upcoming_auctions,
+    })
+
+def past_auction_items(request):
+    current_time = timezone.now()
+
+    past_auctions = AuctionItem.objects.filter(start_time__lt=current_time,end_time__lt=current_time)
+
+    return render(request, 'past_auction_items.html', {
+        'past_auctions': past_auctions,
     })
 
 
@@ -38,7 +48,6 @@ def search_live_auctions(request):
     # checks if the query is in the title or address of the auction item
     live_auctions = AuctionItem.objects.filter(
         Q(title__icontains=query) | Q(address__icontains=query),
-        start_time__lte=current_time, 
         end_time__gte=current_time
     )
 
@@ -51,11 +60,24 @@ def search_upcoming_auctions(request):
     upcoming_auctions = AuctionItem.objects.filter(
         Q(title__icontains=query) | Q(address__icontains=query),
         start_time__gt=current_time,
-        end_time__gt=current_time
     )
 
     return render(request, 'auction_search.html', {'auctions': upcoming_auctions, 'query': query, 'search_type': 'Upcoming Auctions'})
 
+
+def search_past_auctions(request):
+    query = request.GET.get('query', '')
+    current_time = timezone.now()
+
+    past_auctions = AuctionItem.objects.filter(
+        Q(title__icontains=query) | Q(address__icontains=query),
+        end_time__lt=current_time
+    )
+
+    return render(request, 'auction_search.html', {'auctions': past_auctions, 'query': query, 'search_type': 'Past Auctions'})
+
+
+    
 @login_required 
 def create_auction(request):
     if request.method == 'POST':
@@ -64,7 +86,7 @@ def create_auction(request):
             auction_item = form.save(commit=False)
             auction_item.created_by = request.user
             auction_item.save()
-            return redirect('auction_detail', item_id=auction_item.id)
+            return redirect('website:auction_detail', item_id=auction_item.id)
     else:
         form = AuctionItemForm()
 

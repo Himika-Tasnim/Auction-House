@@ -19,6 +19,9 @@ class AuctionItem(models.Model):
     def is_upcoming(self):
         return self.start_time > timezone.now()
 
+    def is_past(self):
+        return self.end_time<timezone.now()
+
     def __str__(self):
         return self.title
     

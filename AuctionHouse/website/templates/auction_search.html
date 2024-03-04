@@ -6,7 +6,7 @@
         <ul class="list-group">
             {% for auction in auctions %}
                 <li class="list-group-item">
-                    <a href="{% url 'auction_detail' item_id=auction.id %}">
+                    <a href="{% url 'website:auction_detail' item_id=auction.id %}">
                         <strong>Title:</strong> {{ auction.title }}
                         <br>
                         <strong>Description:</strong> {{ auction.description }}
