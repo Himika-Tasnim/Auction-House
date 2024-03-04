@@ -14,6 +14,7 @@ urlpatterns = [
     path('search-upcoming-auctions/', views.search_upcoming_auctions, name='search_upcoming_auctions'),
     path('search-past-auctions/', views.search_past_auctions, name='search_past_auctions'),
     path('create_auction/', views.create_auction, name='create_auction'),
+    path('bidding/<int:item_id>/',views.bidding,name="bidding")
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

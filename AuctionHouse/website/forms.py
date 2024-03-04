@@ -15,3 +15,10 @@ class AuctionItemForm(forms.ModelForm):
             'end_time': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }
 
+class BiddingForm(forms.ModelForm):
+    class Meta:
+        model = AuctionItem
+        fields=['current_bid']
+        labels = {
+            'current_bid': 'Enter your Bid :',
+        }

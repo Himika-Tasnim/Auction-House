@@ -45,7 +45,9 @@
                                 <a href="{% url 'website:auction_detail' auction.id %}" class="btn btn-sm btn-primary">View Details</a>
                                 {%if user.is_authenticated%}
                                 {%if user.buyer_seller%}
-                                <a href="" class="btn btn-sm btn-primary">Bid</a>
+                                {% if user != auction.created_by %}
+                                <a href="{% url 'website:bidding' auction.id%}" class="btn btn-sm btn-primary">Bid</a>
+                                {%endif%}
                                 {%endif%}
                                 {%endif%}
                             </div>

@@ -2,7 +2,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import AuctionItem
-from .forms import AuctionSearchForm, AuctionItemForm
+from .forms import * 
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 
@@ -92,3 +92,20 @@ def create_auction(request):
 
     return render(request, 'create_auction.html', {'form': form})
 
+def bidding(request, item_id):
+    auction = get_object_or_404(AuctionItem, id=item_id)
+    if request.method=="POST":
+        form=BiddingForm(request.POST)
+        if form.is_valid():
+            bid_amount = form.cleaned_data['current_bid']
+            if bid_amount>auction.current_bid:
+                auction.current_bid=bid_amount
+                auction.save()
+            return redirect('website:live_auction_items')
+    else:
+        form=BiddingForm
+    return render(request,'bidding.html',{'auction': auction,'form':form})
+        
+
+
+    
