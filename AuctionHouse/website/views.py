@@ -1,4 +1,3 @@
-# views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import AuctionItem
@@ -6,6 +5,9 @@ from .forms import *
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from userProfile.models import Buyer_Seller
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
+
 
 
 def live_auction_items(request):
@@ -45,8 +47,6 @@ def auction_detail(request, item_id):
 def search_live_auctions(request):
     query = request.GET.get('query', '')
     current_time = timezone.now()
-
-    # checks if the query is in the title or address of the auction item
     live_auctions = AuctionItem.objects.filter(
         Q(title__icontains=query) | Q(address__icontains=query),
         end_time__gte=current_time
@@ -93,23 +93,34 @@ def create_auction(request):
 
     return render(request, 'create_auction.html', {'form': form})
 
+
+
+@login_required
 def bidding(request, item_id):
     auction = get_object_or_404(AuctionItem, id=item_id)
-    if request.method=="POST":
-        form=BiddingForm(request.POST)
+    if request.method == "POST":
+        form = BiddingForm(request.POST)  
         if form.is_valid():
             bid_amount = form.cleaned_data['current_bid']
             if bid_amount > auction.current_bid and bid_amount > auction.start_price:
+                previous_highest_bidder = auction.current_bid_by
                 auction.current_bid = bid_amount
+                auction.current_bid_by = request.user
                 auction.save()
+                if previous_highest_bidder:
+                    send_outbid_email(previous_highest_bidder, auction.title, auction.current_bid)
                 return redirect('website:live_auction_items')
             else:
                 message = 'Your bid should be greater than the current bid and starting price.'
                 return render(request, 'bidding.html', {'auction': auction, 'form': form, 'message': message})
     else:
-        form=BiddingForm
-    return render(request,'bidding.html',{'auction': auction,'form':form})
-        
+        form = BiddingForm()  
+    return render(request, 'bidding.html', {'auction': auction, 'form': form})
+
+def send_outbid_email(previous_highest_bidder, auction_title, current_highest_bid):
+    subject = 'Your bid has been outbid!'
+    message = render_to_string('outbid_email.html', {'auction_title': auction_title,'previous_highest_bidder':previous_highest_bidder,'current_highest_bid':current_highest_bid})
+    send_mail(subject, message, '#confidential', [previous_highest_bidder.email])
 
 def seller_rating(request, item_id):
     auction = get_object_or_404(AuctionItem, id=item_id)

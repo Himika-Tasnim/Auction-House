@@ -8,7 +8,8 @@ class AuctionItem(models.Model):
     address = models.CharField(max_length=255)
     start_price = models.DecimalField(max_digits=10, decimal_places=2)
     current_bid = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    current_bid_by = models.ForeignKey(User, on_delete=models.CASCADE,null=True, blank=True, related_name='bids_made')
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='auction_items_created')
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     image = models.ImageField(upload_to='auction_item_images/', blank=True, null=True)
@@ -20,9 +21,7 @@ class AuctionItem(models.Model):
         return self.start_time > timezone.now()
 
     def is_past(self):
-        return self.end_time<timezone.now()
+        return self.end_time < timezone.now()
 
     def __str__(self):
         return self.title
-    
-
