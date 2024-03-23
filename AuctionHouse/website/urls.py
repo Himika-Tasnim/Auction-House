@@ -17,7 +17,7 @@ urlpatterns = [
     path('bidding/<int:item_id>/',views.bidding,name="bidding"),
     path('seller_rating/<int:item_id>/', views.seller_rating, name='seller_rating'),
     path('seller/<int:seller_id>/', views.seller_profile, name='seller_profile'),
-    # path('rating-already-submitted/', views.rating_already_submitted, name='rating_already_submitted'),
+    #path('rating-already-submitted/', views.rating_already_submitted, name='rating_already_submitted'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
