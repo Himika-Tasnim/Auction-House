@@ -39,6 +39,11 @@ class AuctionItem(models.Model):
         if highest_bid:
             self.winner = highest_bid.bidder
             self.save()
+            # if self.winner.email:
+            #     subject = 'Congratulations! You won the auction'
+            #     message = render_to_string('winner_email.html', {'auction_item': self})
+            #     send_mail(subject, message, 'your_email@example.com', [self.winner.email])
+        
             return self.winner
         else:
             self.winner = None
