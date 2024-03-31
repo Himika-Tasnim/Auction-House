@@ -25,7 +25,7 @@ def upcoming_auction_items(request):
         'upcoming_auctions': upcoming_auctions,
     })
 
-def past_auction_items(request):
+def past_auction_items(request=None):
     current_time = timezone.now()
 
     past_auctions = AuctionItem.objects.filter(start_time__lt=current_time, end_time__lt=current_time, approval_status='approved')
@@ -34,10 +34,13 @@ def past_auction_items(request):
         if not auction.winner:  
             auction.determine_winner() 
 
-    return render(request, 'past_auction_items.html', {
-        'past_auctions': past_auctions,
-    })
-
+    if request:
+        return render(request, 'past_auction_items.html', {
+            'past_auctions': past_auctions,
+        })
+        
+    else:
+        return past_auctions
 
 def auction_detail(request, item_id):
     auction_detail = get_object_or_404(AuctionItem, id=item_id)

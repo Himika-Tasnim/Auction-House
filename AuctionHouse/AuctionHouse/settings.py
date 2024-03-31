@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -160,3 +161,8 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = False
 ACCOUNT_DELETE_METHOD = 'POST'
 ACCOUNT_EMAIL_CONFIRMATION_MESSAGE = 'account/email/confirmation_signup_message.txt'
 ACCOUNT_EMAIL_CONFIRMATION_SUBJECT = 'account/email/confirmation_signup_subject.txt'
+
+
+CRONJOBS = [
+    ('*/1 * * * *', 'website.views.past_auction_items'),
+]

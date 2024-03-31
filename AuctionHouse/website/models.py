@@ -71,5 +71,5 @@ class AuctionItemAdmin(admin.ModelAdmin):
             if orig_obj.approval_status == 'pending' and obj.approval_status == 'approved':
                 subject = f'Your auction item "{obj.title}" has been approved'
                 message = f'Your auction item "{obj.title}" has been approved and is now listed.'
-                send_mail(subject, message, '#change this', [obj.created_by.email])
+                # send_mail(subject, message, '#change this', [obj.created_by.email])
         obj.save()
