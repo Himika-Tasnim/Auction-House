@@ -1,10 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-
+from django.template.loader import render_to_string
 from django.contrib import admin
 from django.core.mail import send_mail
-
+#start cmd /k "python manage.py runserver" & start cmd /k "python manage.py run_scheduler"
 class AuctionItem(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -38,12 +38,11 @@ class AuctionItem(models.Model):
         highest_bid = self.bid_set.order_by('-amount').first()
         if highest_bid:
             self.winner = highest_bid.bidder
+            subject = 'Congratulations! You won the auction'
+            message = render_to_string('winner_email.html', {'auction_item': self})
+            send_mail(subject, message, 'sadnan.ornob@gmail.com', [self.winner.email])
             self.save()
-            # if self.winner.email:
-            #     subject = 'Congratulations! You won the auction'
-            #     message = render_to_string('winner_email.html', {'auction_item': self})
-            #     send_mail(subject, message, 'your_email@example.com', [self.winner.email])
-        
+            
             return self.winner
         else:
             self.winner = None
@@ -76,5 +75,5 @@ class AuctionItemAdmin(admin.ModelAdmin):
             if orig_obj.approval_status == 'pending' and obj.approval_status == 'approved':
                 subject = f'Your auction item "{obj.title}" has been approved'
                 message = f'Your auction item "{obj.title}" has been approved and is now listed.'
-                # send_mail(subject, message, '#change this', [obj.created_by.email])
+                send_mail(subject, message, 'sadnan.ornob@gmail.com', [obj.created_by.email])
         obj.save()

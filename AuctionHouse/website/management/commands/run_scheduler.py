@@ -13,10 +13,8 @@ class Command(BaseCommand):
             past_auction_items(None)
             self.stdout.write(self.style.SUCCESS("Task completed."))
 
-        # Schedule the task to run every minute
         schedule.every().minute.do(schedule_past_auction_items)
 
-        # Run the scheduler in a loop
         while True:
             schedule.run_pending()
             time.sleep(1)

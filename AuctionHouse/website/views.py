@@ -27,7 +27,6 @@ def upcoming_auction_items(request):
 
 def past_auction_items(request=None):
     current_time = timezone.now()
-
     past_auctions = AuctionItem.objects.filter(start_time__lt=current_time, end_time__lt=current_time, approval_status='approved')
 
     for auction in past_auctions:
@@ -137,7 +136,7 @@ def bidding(request, item_id):
 def send_outbid_email(previous_highest_bidder, auction_title, current_highest_bid):
     subject = 'Your bid has been outbid!'
     message = render_to_string('outbid_email.html', {'auction_title': auction_title,'previous_highest_bidder':previous_highest_bidder,'current_highest_bid':current_highest_bid})
-    send_mail(subject, message, '#confidential', [previous_highest_bidder.email])
+    # send_mail(subject, message, '#confidential', [previous_highest_bidder.email])
 
 
 def seller_rating(request, item_id):
