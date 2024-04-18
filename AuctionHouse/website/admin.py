@@ -1,4 +1,5 @@
 from django.contrib import admin
-from .models import AuctionItem
+from .models import *
 
 admin.site.register(AuctionItem)
+admin.site.register(Wishlist)

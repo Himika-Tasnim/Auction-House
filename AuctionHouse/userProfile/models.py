@@ -16,3 +16,4 @@ class Buyer_Seller(models.Model):
         if self.ratings_count == 0:
             return 0
         return self.ratings_sum / self.ratings_count
+

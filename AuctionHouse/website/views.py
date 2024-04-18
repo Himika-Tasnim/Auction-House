@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import AuctionItem
+from .models import AuctionItem,Wishlist
 from .forms import * 
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -140,3 +140,14 @@ def seller_rating(request, item_id):
 def seller_profile(request, seller_id):
     seller = get_object_or_404(Buyer_Seller, user_id=seller_id)
     return render(request, 'seller_profile.html', {'seller': seller})
+
+
+
+def add_to_wishlist(request, item_id):
+    wish = get_object_or_404(AuctionItem, id=item_id)
+    new_object = Wishlist.objects.create(creator=request.user, wish=wish)
+    return redirect('website:show_wishlist')
+
+def show_wishlist(request):
+    wishlist = Wishlist.objects.filter(creator=request.user)
+    return render(request, 'wishlist.html', {'wishlist': wishlist})

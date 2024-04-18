@@ -40,6 +40,14 @@
                                     </small>
                                 </p>
                                 <a href="{% url 'website:auction_detail' auction.id %}" class="btn btn-sm btn-primary">View Details</a>
+                                {%if user.is_authenticated%}
+                                {%if user.buyer_seller%}
+                                {% if user != auction.created_by %}
+                                <a href="{% url 'website:add_to_wishlist' auction.id %}" class="btn btn-sm btn-primary">Add to Wishlist</a>
+                                {%endif%}
+                                {%endif%}
+                                {%endif%}
+                                
                             </div>
                         </div>
                     </div>

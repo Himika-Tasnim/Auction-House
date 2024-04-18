@@ -18,6 +18,9 @@ urlpatterns = [
     path('seller_rating/<int:item_id>/', views.seller_rating, name='seller_rating'),
     path('seller/<int:seller_id>/', views.seller_profile, name='seller_profile'),
     # path('rating-already-submitted/', views.rating_already_submitted, name='rating_already_submitted'),
+    path('add_to_wishlist/<int:item_id>/', views.add_to_wishlist, name='add_to_wishlist'),
+    path('show_wishlist/', views.show_wishlist, name='show_wishlist'),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

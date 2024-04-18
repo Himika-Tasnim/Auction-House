@@ -25,3 +25,9 @@ class AuctionItem(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Wishlist(models.Model):
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    wish = models.ForeignKey(AuctionItem, on_delete=models.CASCADE)
+
