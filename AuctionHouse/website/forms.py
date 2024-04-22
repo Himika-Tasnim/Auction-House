@@ -1,5 +1,5 @@
 from django import forms
-from .models import AuctionItem
+from .models import *
 from django.forms.widgets import TimeInput
 from django.core.validators import MinValueValidator
 
@@ -21,4 +21,13 @@ class BiddingForm(forms.ModelForm):
         fields=['current_bid']
         labels = {
             'current_bid': 'Enter your Bid :',
+        }
+class MeetingForm(forms.ModelForm):
+    class Meta:
+        model = Meeting
+        fields = ['slot1','slot2', 'slot3']
+        widgets = {
+            'slot1': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'slot2': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
+            'slot3': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }

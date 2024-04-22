@@ -31,3 +31,11 @@ class Wishlist(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     wish = models.ForeignKey(AuctionItem, on_delete=models.CASCADE)
 
+class Meeting(models.Model):
+    item = models.ForeignKey(AuctionItem, on_delete=models.CASCADE)
+    winner=models.ForeignKey(User, on_delete=models.CASCADE,related_name='auction_item_winner')
+    owner=models.ForeignKey(User, on_delete=models.CASCADE,related_name='auction_item_owner')
+    slot1 = models.DateTimeField()
+    slot2 = models.DateTimeField()
+    slot3 = models.DateTimeField()
+

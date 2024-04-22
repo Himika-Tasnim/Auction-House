@@ -20,6 +20,8 @@ urlpatterns = [
     # path('rating-already-submitted/', views.rating_already_submitted, name='rating_already_submitted'),
     path('add_to_wishlist/<int:item_id>/', views.add_to_wishlist, name='add_to_wishlist'),
     path('show_wishlist/', views.show_wishlist, name='show_wishlist'),
+    path('winner_me/', views.winner_me, name='winner_me'),
+    path('meeting/<int:item_id>/', views.meeting, name='meeting'),
 
 ]
 

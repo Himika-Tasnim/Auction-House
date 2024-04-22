@@ -16,7 +16,7 @@
         <!-- Past Auctions -->
         <div class="card">
             <div class="card-header">
-                <h2>Past Auctions</h2>
+                <h2>Winning Bids</h2>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -40,6 +40,7 @@
                                     </small>
                                 </p>
                                 <a href="{% url 'website:auction_detail' auction.id %}" class="btn btn-sm btn-primary">View Details</a>
+                                <a href="{% url 'website:meeting' auction.id %}" class="btn btn-sm btn-primary">Schedule meeting</a>
                             </div>
                         </div>
                     </div>

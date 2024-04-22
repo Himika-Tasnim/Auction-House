@@ -151,3 +151,38 @@ def add_to_wishlist(request, item_id):
 def show_wishlist(request):
     wishlist = Wishlist.objects.filter(creator=request.user)
     return render(request, 'wishlist.html', {'wishlist': wishlist})
+
+def winner_me(request):
+    current_time = timezone.now()
+
+    past_auctions = AuctionItem.objects.filter(start_time__lt=current_time,end_time__lt=current_time,current_bid_by=request.user)
+
+    return render(request, 'winner_me.html', {
+        'past_auctions': past_auctions,
+    })
+
+
+def meeting(request, item_id):
+    auction = get_object_or_404(AuctionItem, id=item_id)
+    if request.method == 'POST':
+        form = MeetingForm(request.POST, request.FILES)
+        if form.is_valid():
+            meeting = form.save(commit=False)
+            meeting.item=auction
+            meeting.owner=auction.created_by 
+            meeting.winner= request.user
+            meeting.save()
+            title=auction.title
+            send_meeting_email(title,meeting.slot1,meeting.slot2,meeting.slot3,meeting.owner,meeting.winner)
+            return redirect('userProfile:home')
+    else:
+        form = MeetingForm()
+
+    return render(request, 'meeting.html', {'form': form})
+
+def send_meeting_email(auction,slot1,slot2,slot3,owner,winner):
+    subject = 'Winner wants to schedule a meeting!'
+    message = render_to_string('meeting_email.html', {'auction': auction,'slot1':slot1,'slot2':slot2,'slot3':slot3,'owner':owner,'winner':winner})
+    send_mail(subject, message, '#confidential', [owner.email])
+
+
