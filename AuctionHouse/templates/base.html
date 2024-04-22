@@ -42,7 +42,7 @@
     <div class="flex justify-between  w-full ">
       <div class="flex-shrink-0 flex items-center absolute top-2 left-2">
         <a
-          href="#"
+          href="/"
           class="rounded-lg border-2 border-b-4 border-r-4 border-white px-2 py-1 text-2xl text-white font-bold hover:text-indigo-600"
         >
           <i class="fas fa-home mx-1"></i> Auction House
@@ -87,7 +87,8 @@
                       </a>
                       <ul class="dropdown-menu" aria-labelledby="profileDropdown">
                           <li><a class="dropdown-item" href="{% url 'userProfile:profile_view' %}">View Profile</a></li>
-                          <li><a class="dropdown-item" href="#">Wishlist</a></li>
+                          <li><a class="dropdown-item" href="{% url 'website:show_wishlist' %}"> Wishlist</a></li>
+                          <li><a class="dropdown-item" href="{% url 'website:winner_me' %}"> Winning bids</a></li>
                           <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
                       </ul>
                   </li>
