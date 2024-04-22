@@ -8,6 +8,7 @@ from userProfile.models import Buyer_Seller, Rating
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.conf import settings
+from decimal import Decimal
 
 
 def live_auction_items(request):
@@ -43,11 +44,18 @@ def past_auction_items(request=None):
 
 def auction_detail(request, item_id):
     auction_detail = get_object_or_404(AuctionItem, id=item_id)
-    
+    similar_auctions = AuctionItem.objects.filter(
+        Q(address__icontains=auction_detail.address) and
+        Q(house_type=auction_detail.house_type)
+    ).exclude(id=auction_detail.id)
+
+    if (len(similar_auctions) >= 5):
+        similar_auctions = similar_auctions[:5]
+
     if auction_detail.is_past() and not auction_detail.winner:
         auction_detail.determine_winner()
         
-    return render(request, 'auction_detail.html', {'auction_detail': auction_detail})
+    return render(request, 'auction_detail.html', {'auction_detail': auction_detail,'similar_auctions': similar_auctions})
 
 
 def search_live_auctions(request):
@@ -105,6 +113,36 @@ def create_auction(request):
 @login_required
 def bidding(request, item_id):
     auction = get_object_or_404(AuctionItem, id=item_id)
+    s_a = AuctionItem.objects.filter(
+        Q(address__icontains=auction.address) and
+        Q(house_type=auction.house_type) and
+        Q(end_time__gt=timezone.now()) and 
+        Q(current_bid__gt=0)
+    )
+
+    avg_per_sq_feet_price = Decimal(0)
+    avg_per_floor_price = Decimal(0)
+    count = 0
+
+    if s_a.exists():  # Check if the queryset is not empty
+        for auctions in s_a:
+            if auctions.house_size:
+                avg_per_sq_feet_price += (auctions.current_bid / auctions.house_size)
+            if auctions.floor_count:
+                avg_per_floor_price += (auctions.current_bid / auctions.floor_count)
+            count += 1
+        
+        if count > 0:
+            avg_per_floor_price = avg_per_floor_price / count 
+            avg_per_sq_feet_price = avg_per_sq_feet_price / count
+
+            predicted_value = (auction.house_size * avg_per_sq_feet_price + auction.floor_count * avg_per_floor_price) / 2
+            predicted_value = int(predicted_value)
+        else:
+            predicted_value = None  # Set predicted_value to None if there are no valid auctions
+    else:
+        predicted_value = None
+
     if request.method == "POST":
         form = BiddingForm(request.POST)
         if form.is_valid():
@@ -128,10 +166,10 @@ def bidding(request, item_id):
                 
             else:
                 message = 'Your bid should be greater than the starting price and the current highest bid.'
-                return render(request, 'bidding.html', {'auction': auction, 'form': form, 'message': message})
+                return render(request, 'bidding.html', {'auction': auction, 'form': form, 'message': message, 'predicted_value':predicted_value})
     else:
         form = BiddingForm()
-    return render(request, 'bidding.html', {'auction': auction, 'form': form})
+    return render(request, 'bidding.html', {'auction': auction, 'form': form, 'predicted_value':predicted_value})
 
 def send_outbid_email(previous_highest_bidder, auction_title, current_highest_bid):
     subject = 'Your bid has been outbid!'
@@ -202,4 +240,17 @@ def send_meeting_email(auction,slot1,slot2,slot3,owner,winner):
     message = render_to_string('meeting_email.html', {'auction': auction,'slot1':slot1,'slot2':slot2,'slot3':slot3,'owner':owner,'winner':winner})
     send_mail(subject, message, settings.EMAIL_HOST_USER, [owner.email])
 
+# saha
+def Advisor_Page(request):
 
+    advisors = User.objects.filter(is_staff=True).exclude(is_superuser=True)
+
+    return render(request,'advisor_page.html',{'advisors':advisors})
+
+
+def Advisor_Inside(request,id):
+    advisor = get_object_or_404(User, id=int(id))
+
+    slots = AdvisorSlot.objects.filter(user=advisor)
+
+    return render(request,'advisor_inside.html',{'advisor':advisor,'slots':slots})

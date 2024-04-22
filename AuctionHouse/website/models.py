@@ -6,6 +6,14 @@ from django.contrib import admin
 from django.core.mail import send_mail
 from django.conf import settings
 
+h_type = (
+    ('Bunglow','Bunglow'),
+    ('Duplex', 'Duplex'),
+    ('Flat', 'Flat'),
+    ('Normal', 'Normal')
+)
+
+
 class AuctionItem(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -18,6 +26,9 @@ class AuctionItem(models.Model):
     end_time = models.DateTimeField(blank=True, null=True)
     image = models.ImageField(upload_to='auction_item_images/', blank=True, null=True)
     winner = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name='won_auctions')
+    house_size = models.IntegerField(null=True, blank=True)
+    floor_count = models.IntegerField(null=True, blank=True)
+    house_type = models.CharField(max_length=15, choices=h_type, null=True, blank=True)
 
     APPROVAL_CHOICES = [
         ('pending', 'Pending'),
@@ -93,3 +104,34 @@ class Meeting(models.Model):
     slot2 = models.DateTimeField()
     slot3 = models.DateTimeField()
 
+
+d_type = (
+    ('Sunday','Sunday'),
+    ('Monday','Monday'),
+    ('Tuesday','Tuesday'),
+    ('Wednesday','Wednesday'),
+    ('Thursday','Thursday'),
+    ('Friday','Friday'),
+    ('Saturday','Saturday')
+)
+
+class AdvisorSlot(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="slot")
+    day = models.CharField(max_length=20, choices=d_type)
+
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+
+    message = models.TextField(null=True,blank=True)
+
+    max_user = models.IntegerField(default=10)
+
+    total_user = models.IntegerField(default=0,null=True, blank=True)
+
+    meet_link = models.CharField(max_length=300, null=True, blank=True)
+
+    booked_user_list = models.ManyToManyField(User, blank=True,  related_name='booked_users')
+
+
+    def __str__(self):
+        return f"{self.user.username}'s {self.day}'s slot"

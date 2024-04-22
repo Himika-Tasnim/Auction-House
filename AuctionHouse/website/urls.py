@@ -22,6 +22,8 @@ urlpatterns = [
     path('show_wishlist/', views.show_wishlist, name='show_wishlist'),
     path('winner_me/', views.winner_me, name='winner_me'),
     path('meeting/<int:item_id>/', views.meeting, name='meeting'),
+    path('advisors/',views.Advisor_Page,name='advisors'),
+    path('advisors/<str:id>',views.Advisor_Inside,name='advisorInside')
 
 ]
 

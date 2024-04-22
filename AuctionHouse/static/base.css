@@ -1,13 +1,15 @@
-
 body {
   font-family: Arial, sans-serif;
-  background-image: url('background.webp');
+  background-image: url("1.jpeg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   min-height: 100vh;
 }
-
+* {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -54,7 +56,7 @@ nav .navbar-brand {
 
 .container p {
   color: #ffffff;
-  font: 1em Arial, sans-serif;
+
   margin-bottom: 50px;
 }
 
@@ -68,12 +70,12 @@ nav .navbar-brand {
   transition: all 0.3s ease;
 }
 
-navbarNavDropdown{
+navbarNavDropdown {
   display: none;
   position: absolute;
   background-color: #5c1a1a;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 12px 16px;
   z-index: 1;
 }
@@ -117,7 +119,6 @@ input[type="submit"] {
 input[type="submit"]:hover {
   background-color: rgb(80, 80, 221);
 }
-
 
 form button {
   margin-left: calc(50% - 100px);
