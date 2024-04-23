@@ -41,7 +41,7 @@
                                 </p>
                                 <p class="card-text font-weight-bold text-primary mb-3">
                                     Current Bid: {{ auction.current_bid }}</p>
-                                <a href="{% url 'website:auction_detail' auction.id %}" class="btn btn-sm btn-primary">View Details</a>
+                                <a href="{% url 'website:auction_detail' auction.id %}" class="btn btn-sm btn-primary">Details</a>
                                 {%if user.is_authenticated%}
                                 {%if user.buyer_seller%}
                                 {% if user != auction.created_by %}
