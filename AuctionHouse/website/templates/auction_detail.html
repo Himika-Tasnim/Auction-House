@@ -82,11 +82,7 @@
       <div class="container-col1">
         <img src="{{ auction_detail.image.url }}" alt="{{ auction_detail.title }}" class="img-fluid">
         <br>
-        {% if auction_detail.sketchfab_script %}
-          <div class="sketchfab-embed-wrapper">
-              {{ auction_detail.sketchfab_script|safe }}
-          </div>
-        {% endif %}
+        
       </div>
       
       <!-- Auction Details -->
@@ -102,7 +98,12 @@
         </div>
       </div>
     </div>
-
+    
+    {% if auction_detail.sketchfab_script %}
+          <div class="sketchfab-embed-wrapper">
+              {{ auction_detail.sketchfab_script|safe }}
+          </div>
+        {% endif %}
     <!-- Similar bid history -->
     <div class="similar-bid-history-container">
       <h3>View Similar bid history</h3>

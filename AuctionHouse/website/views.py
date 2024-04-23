@@ -268,8 +268,8 @@ def refund_request(request):
 
 def generate_bill(request):
     context = {
-        'customer_name': 'John Doe',
-        'total_amount': 100.00,
+        'customer_name': request.user,
+        'total_amount': 100000.00,
         
     }
     html_content = render_to_string('bill_template.html', context)

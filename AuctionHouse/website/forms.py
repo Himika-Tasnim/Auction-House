@@ -9,7 +9,7 @@ class AuctionSearchForm(forms.Form):
 class AuctionItemForm(forms.ModelForm):
     class Meta:
         model = AuctionItem
-        fields = ['title', 'description', 'address', 'start_price', 'image']
+        fields = ['title', 'description', 'address', 'start_price', 'image', 'sketchfab_script']
         widgets = {
             'start_time': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
             'end_time': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
