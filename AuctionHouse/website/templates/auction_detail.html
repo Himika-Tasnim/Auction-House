@@ -81,6 +81,12 @@
       <!-- Display Auction Image -->
       <div class="container-col1">
         <img src="{{ auction_detail.image.url }}" alt="{{ auction_detail.title }}" class="img-fluid">
+        <br>
+        {% if auction_detail.sketchfab_script %}
+          <div class="sketchfab-embed-wrapper">
+              {{ auction_detail.sketchfab_script|safe }}
+          </div>
+        {% endif %}
       </div>
       
       <!-- Auction Details -->

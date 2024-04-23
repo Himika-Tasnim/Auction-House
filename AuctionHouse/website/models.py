@@ -29,6 +29,7 @@ class AuctionItem(models.Model):
     house_size = models.IntegerField(null=True, blank=True)
     floor_count = models.IntegerField(null=True, blank=True)
     house_type = models.CharField(max_length=15, choices=h_type, null=True, blank=True)
+    sketchfab_script = models.TextField(blank=True, null=True)
 
     APPROVAL_CHOICES = [
         ('pending', 'Pending'),
@@ -135,3 +136,12 @@ class AdvisorSlot(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s {self.day}'s slot"
+
+class RefundRequest(models.Model):
+    reason = models.TextField()
+    bank_branch = models.CharField(max_length=100)
+    bank_account_number = models.CharField(max_length=50)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.reason  # Display reason as the string representation of the object

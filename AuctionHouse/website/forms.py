@@ -31,3 +31,8 @@ class MeetingForm(forms.ModelForm):
             'slot2': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
             'slot3': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
         }
+
+class RefundRequestForm(forms.ModelForm):
+    class Meta:
+        model = RefundRequest
+        fields = ['reason', 'bank_branch', 'bank_account_number']

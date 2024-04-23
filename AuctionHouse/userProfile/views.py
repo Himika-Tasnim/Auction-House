@@ -7,6 +7,7 @@ from django.contrib.auth import logout
 import random
 from django.core.mail import send_mail
 from django.contrib import messages
+from django.conf import settings
 
 
 # Create your views here.
@@ -60,7 +61,7 @@ def profile_update(request):
         send_mail(
             'OTP for Profile Update',
             f'Your OTP for profile update is: {otp}',
-            'settings.EMAIL_HOST_USER',
+            settings.EMAIL_HOST_USER,
             [request.user.email],
             fail_silently=False,
         )

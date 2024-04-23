@@ -9,6 +9,7 @@ from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.conf import settings
 from decimal import Decimal
+from django.http import HttpResponse
 
 
 def live_auction_items(request):
@@ -254,3 +255,23 @@ def Advisor_Inside(request,id):
     slots = AdvisorSlot.objects.filter(user=advisor)
 
     return render(request,'advisor_inside.html',{'advisor':advisor,'slots':slots})
+
+def refund_request(request):
+    if request.method == 'POST':
+        form = RefundRequestForm(request.POST)
+        if form.is_valid():
+            form.save()  # Save the form data to the database
+            return redirect('userProfile:home')  # Redirect to a success page
+    else:
+        form = RefundRequestForm()
+    return render(request, 'refund.html', {'form': form})
+
+def generate_bill(request):
+    context = {
+        'customer_name': 'John Doe',
+        'total_amount': 100.00,
+        
+    }
+    html_content = render_to_string('bill_template.html', context)
+ 
+    return HttpResponse(html_content, content_type='text/html')

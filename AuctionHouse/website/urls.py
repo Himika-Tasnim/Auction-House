@@ -23,7 +23,9 @@ urlpatterns = [
     path('winner_me/', views.winner_me, name='winner_me'),
     path('meeting/<int:item_id>/', views.meeting, name='meeting'),
     path('advisors/',views.Advisor_Page,name='advisors'),
-    path('advisors/<str:id>',views.Advisor_Inside,name='advisorInside')
+    path('advisors/<str:id>',views.Advisor_Inside,name='advisorInside'),
+    path('refund/', views.refund_request, name='refund'),
+    path('generate-bill/', views.generate_bill, name='generate_bill')
 
 ]
 
