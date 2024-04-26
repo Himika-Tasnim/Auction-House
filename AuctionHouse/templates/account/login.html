@@ -1,50 +1,104 @@
 {% extends "base.html" %}
-{% load i18n %}
-{% load allauth account socialaccount %}
-{% block content %}
-<style>
-    input,
-    select,
-    textarea {
-        width: 90%;
-        padding: 6px;
-        margin: 4px 0;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        color: black;
-    }
-</style>
-<br><br><br>
-   
-    <div class="container d-flex justify-content-center align-items-center">
-        <div class="card p-4 border-primary rounded shadow" style="background-color: #001f3f; max-width: 400px; color: white;">
-            <p style="text-align: center; color: white;">
-                {% blocktrans %}If you have not created an account yet, then please
-            <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
-            </p>
-            {% url 'account_login' as login_url %}
-    {% element form form=form method="post" action=login_url tags="entrance,login" %}
-        {% slot body %}
-            {% csrf_token %}
-            {% element fields form=form unlabeled=True %}
-            {% endelement %}
-            {% if redirect_field_value %}
-                <input type="hidden"
-                       name="{{ redirect_field_name }}"
-                       value="{{ redirect_field_value }}" />
-            {% endif %}
-        {% endslot %}
-        {% slot actions %}
-            {% element button type="submit" tags="prominent,login" %}
-                {% trans "Sign In" %}
-            {% endelement %}
-        {% endslot %}
+{% load allauth i18n %}
 
-    {% endelement %}
-    {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+{% block content %}
+    <style>
+        /* Custom CSS for the form */
+        .login-form {
+            background-color: rgba(169, 171, 174, 0.5); /* Transparent background color */
+            padding: 20px; /* Padding */
+            border-radius: 15px; /* Rounded corners */
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Shadow effect */
+        }
+
+        /* Custom CSS for form fields */
+        .login-form .form-group input[type="text"],
+        .login-form .form-group input[type="email"],
+        .login-form .form-group input[type="password"] {
+            background-color: rgba(0, 63, 95, 0.7); /* Semi-transparent form field background color */
+            color: white; /* Form field text color */
+            border: none; /* Remove border */
+            border-radius: 10px; /* Rounded corners */
+            padding: 12px; /* Padding */
+            margin-bottom: 15px; /* Bottom margin */
+            width: 80%; /* Full width */
+            box-sizing: border-box; /* Include padding and border in the element's total width */
+        }
+
+        /* Custom CSS for the placeholder text */
+        .login-form .form-group input::placeholder {
+            color: #ccc; /* Placeholder text color */
+        }
+
+        /* Custom CSS for the form text color */
+        .login-form p {
+            color: rgb(40, 42, 95); /* Text color */
+            text-align: center; /* Center text */
+            margin-bottom: 20px; /* Bottom margin */
+            font-weight: bold;
+        }
+
+        /* Custom CSS for the sign-up link */
+        .login-form a.signup-link {
+            color:  #5135f1; /* Link text color */
+            text-decoration: none; /* Remove underline */
+            transition: color 0.3s; /* Smooth transition for color change */
+        }
+
+        /* Hover effect for sign-up link */
+        .login-form a.signup-link:hover {
+            color: #240c61; /* Change color when hovered */
+        }
+
+        /* Custom CSS for the login button */
+        .login-form .login-button {
+            background: linear-gradient(130deg, rgb(40, 42, 95), rgb(103, 103, 134),rgb(40, 42, 95));
+            /* Gradient background color */
+            border: none; /* Remove border */
+            color: white; /* White text color */
+            padding: 10px 25px; /* Padding */
+            text-align: center; /* Center text */
+            text-decoration: none; /* Remove underline */
+            display: inline-block; /* Make it inline block */
+            font-size: 18px; /* Font size */
+            border-radius: 10px; /* Rounded corners */
+            cursor: pointer; /* Add cursor pointer */
+            transition: background-color 0.3s; /* Add transition for hover effect */
+        }
+
+        /* Hover effect for login button */
+        .login-form .login-button:hover {
+            background-color:  #001f3f; /* Darker gradient background color */
+        }
+    </style>
+
+    <br><br><br>
+    <div class="container d-flex justify-content-center align-items-center" style="margin-bottom: 20px;">
+        <div class="card p-4 border-primary rounded shadow login-form" style="width: 380px;">
+            <h4 style="margin-left: 19%; margin-bottom: 12px; font-size: 30px; font-weight: bold; background: linear-gradient(135deg, rgb(40, 42, 95), rgb(83, 83, 114),rgb(30, 31, 70)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                Please Login
+            </h2>
+            
+            <p style="font-weight: 50;">
+                {% blocktrans %}Don't have an account? Then please <a href="{{ signup_url }}" class="signup-link">sign up</a>.{% endblocktrans %}
+            </p>
+            {% url 'account_login' as action_url %}
+            {% element form form=form method="post" action=action_url tags="entrance,login" %}
+                {% slot body %}
+                    {% csrf_token %}
+                    {% element fields form=form unlabeled=True %}
+                    {% endelement %}
+                    {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                {% endslot %}
+                {% slot actions %}
+                    <button class="login-button" type="submit">
+                        {% trans "Sign In" %}
+                    </button>
+                {% endslot %}
+            {% endelement %}
+            {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
         </div>
     </div>
-   
-    
 {% endblock content %}
