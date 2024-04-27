@@ -12,7 +12,7 @@
   .container-col1{
     background-color: rgba(255,255,255,0.7);
     width: 50%;
-    height: 60%;
+    height: 50%;
     padding: 20px;
     border-radius: 10px;
   }
@@ -20,6 +20,9 @@
     width: 100%;
     height: 100%;
     border-radius: 10px;
+  }
+  .container p{
+    color: #001f3f;
   }
 
 </style>
@@ -31,12 +34,14 @@
       </div>
 
       <div class="col-md-6">
-        <div class="card p-4 border-primary rounded shadow" style="background-color: #001f3f; color: white;">
+        <div class="card p-4 border-primary rounded shadow" style="background-color: rgba(249, 240, 223, 0.5);  color: #001f3f;">
           <!-- Countdown Timer Section -->
-          <div id="countdown" class="text-danger mb-4" style="text-align: center; font-weight: bold; font-size: 20px;"></div> 
-          
-          <h2 class="card-title text-light mb-4" style="text-align: center;">Property Detail</h2>
-          <p class="card-text text-light">
+          <div id="countdown" class="text-danger mb-4" style="text-align: center; font-weight: bold; font-size: 20px; color: #001f3f;"></div> 
+          <h4 style="margin-left: 30%; margin-bottom: 12px; font-size: 30px; font-weight: bold; background: linear-gradient(135deg, rgb(40, 42, 95), rgb(83, 83, 114),rgb(30, 31, 70)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            Property Detail
+          </h4>
+  
+          <p style="color: #001f3f; margin-bottom: 3%;">
             Title: {{ auction.title }}<br>
             Description: {{ auction.description }}<br>
             Address: {{ auction.address }}<br>
@@ -45,16 +50,17 @@
             Starting Price: {{ auction.start_price }}<br>
             Current Bid: {{ auction.current_bid }} <br>
           </p>
-          <p id="prediction-message"><a href="#" id="predict-link">Click here to get a prediction from AI about the price of the house.</a></p>
+          <p id="prediction-message"><a href="#" id="predict-link"  style=" margin-bottom: 3%;"> <span style="color: red;" >Click here</span> to get a prediction from AI about the price of the house.</a></p>
           <p id="prediction-value" style="display: none;"><strong>Approx. Value:</strong> <span id="predicted-value"></span> Tk</p>
-          <form method="POST">
+          <form method="POST" >
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Submit">
+            {% if message %}
+            <p class="text-danger" style="margin-bottom: 2%;">{{ message }}</p>
+            {% endif %}
+            <input type="submit" style="background-color: #001f3f; color: white; margin-left: 30%;" value="Submit">
           </form><br>
-          {% if message %}
-            <p class="text-danger">{{ message }}</p>
-          {% endif %}
+          
         </div>
       </div>
     </div>

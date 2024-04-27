@@ -32,7 +32,6 @@ def register(request):
 
 def profile_view(request):
     profile = request.user.buyer_seller
-    #get_object_or_404(Buyer_Seller, user=request.user)
     return render(request,'userProfile/profile_view.html',{'profile':profile})
 
 """
@@ -54,11 +53,9 @@ def profile_update_page(request):
 """
 
 def profile_update(request):
-    # Check if the user is authenticated
     if request.user.is_authenticated:
-        # Generate OTP
+        # To generate OTP
         otp = ''.join(random.choices('0123456789', k=6))
-        # Send OTP to user's email
         send_mail(
             'OTP for Profile Update',
             f'Your OTP for profile update is: {otp}',
@@ -66,25 +63,20 @@ def profile_update(request):
             [request.user.email],
             fail_silently=False,
         )
-        # Store the OTP in the session
+        # To store the OTP in the session
         request.session['otp'] = otp
         return redirect("userProfile:otp_verification")
     else:
-        return redirect("userProfile:home")  # Redirect to login if user is not authenticated
+        return redirect("userProfile:home")  
 
 def otp_verification(request):
     if request.method == 'POST':
-        # Get the OTP entered by the user
         entered_otp = request.POST.get('otp')
-        # Get the OTP stored in the session
         otp_in_session = request.session.get('otp')
-        # Compare the entered OTP with the one stored in the session
         if entered_otp == otp_in_session:
-            # OTP matches, allow the user to update the profile
-            del request.session['otp']  # Remove the OTP from the session
+            del request.session['otp']  # To remove the OTP from the session
             return redirect('userProfile:profile_update_page')
         else:
-            # OTP does not match, display an error message
             messages.error(request, 'Invalid OTP. Please try again.')
             return redirect("userProfile:otp_verification")
 
@@ -100,8 +92,6 @@ def profile_update_page(request):
             var.user = request.user
             var.save()
             return redirect("userProfile:profile_view")
-        else:
-            print(form.errors)  # Print form errors for debugging
     else:
         form = RegitrationForm(instance=profile)
 

@@ -114,6 +114,8 @@ def create_auction(request):
 @login_required
 def bidding(request, item_id):
     auction = get_object_or_404(AuctionItem, id=item_id)
+
+    #The portion of prediction is done by Loknath Saha. It can be found in his contribution part. 
     s_a = AuctionItem.objects.filter(
         Q(address__icontains=auction.address) and
         Q(house_type=auction.house_type) and
@@ -124,7 +126,7 @@ def bidding(request, item_id):
     avg_per_sq_feet_price = Decimal(0)
     avg_per_floor_price = Decimal(0)
     count = 0
-
+    
     if s_a.exists():  # Check if the queryset is not empty
         for auctions in s_a:
             if auctions.house_size:
@@ -148,8 +150,6 @@ def bidding(request, item_id):
         form = BiddingForm(request.POST)
         if form.is_valid():
             bid_amount = form.cleaned_data['current_bid']
-
-            # Get the current highest bid for the auction
             highest_bid = Bid.objects.filter(item=auction).order_by('-amount').first()
 
             if bid_amount >= auction.start_price and (not highest_bid or bid_amount > highest_bid.amount):
@@ -161,7 +161,7 @@ def bidding(request, item_id):
                 auction.save()
 
                 if previous_highest_bidder:
-                    send_outbid_email(previous_highest_bidder, auction.title, bid_amount)  # Send outbid email
+                    send_outbid_email(previous_highest_bidder, auction.title, bid_amount)  
 
                 return redirect('website:live_auction_items')
                 
@@ -176,6 +176,7 @@ def send_outbid_email(previous_highest_bidder, auction_title, current_highest_bi
     subject = 'Your bid has been outbid!'
     message = render_to_string('outbid_email.html', {'auction_title': auction_title,'previous_highest_bidder':previous_highest_bidder,'current_highest_bid':current_highest_bid})
     send_mail(subject, message, settings.EMAIL_HOST_USER, [previous_highest_bidder.email])
+
 
 def seller_rating(request, item_id):
     auction = get_object_or_404(AuctionItem, id=item_id)

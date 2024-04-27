@@ -5,10 +5,10 @@
     <style>
         /* Custom CSS for the profile view */
         .profile-card {
-            background-color: rgba(169, 171, 174, 0.5); /* Transparent background color */
+            background-color: rgba(249, 240, 223, 0.5); /* Transparent background color */
             padding: 20px; /* Padding */
             border-radius: 15px; /* Rounded corners */
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Shadow effect */
+            box-shadow: 0 4px 8px 0 rgba(98, 62, 11, 0.2); /* Shadow effect */
             color: white; /* Text color */
             width: 360px; /* Card width */
             align-items: left; /* Center content vertically */
@@ -55,13 +55,13 @@
     {% if user.is_authenticated %}
     <div class="container d-flex justify-content-center align-items-center">
         <div class="card p-4 border-primary rounded shadow profile-card" style="width: 400px; ">
-            <h4 style="margin-left: 30%; margin-bottom: 12px; font-size: 30px; font-weight: bold; background: linear-gradient(135deg, rgb(40, 42, 95), rgb(83, 83, 114),rgb(30, 31, 70)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <h4 style="margin-left: 30%; margin-bottom: 12px; font-size: 30px; font-weight: bold; background: linear-gradient(130deg, rgb(40, 42, 95), rgb(99, 99, 143), rgb(24, 25, 57)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                 My Profile
             </h4><br>
-            <p>Name: {{ profile.user.username |title }}</p>
-            <p>Email: {{ profile.user.email }}</p>
-            <p>Phone: {{ profile.phone }}</p>
-            <p>Address: {{ profile.address }}</p>
+            <p><span style="font-weight: bold;">Name: </span> {{ profile.user.username |title }}</p>
+            <p><span style="font-weight: bold;">Email: </span> {{ profile.user.email }}</p>
+            <p><span style="font-weight: bold;">Phone: </span>{{ profile.phone }}</p>
+            <p><span style="font-weight: bold;">Address: </span>{{ profile.address }}</p>
             <a href="{% url 'userProfile:profile_update' %}" class="btn btn-primary update-button" style="margin-left: 30%;">Update</a>
         </div>
     </div><br>
